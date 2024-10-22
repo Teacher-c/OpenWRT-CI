@@ -1,4 +1,4 @@
-#AC2100 And CR6608
+#AC2100 CR6608
 #Select the target platform
 CONFIG_TARGET_ramips=y
 CONFIG_TARGET_ramips_mt7621=y
