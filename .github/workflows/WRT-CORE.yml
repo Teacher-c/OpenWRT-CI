@@ -31,9 +31,6 @@ on:
       WRT_SOURCE:
         required: false
         type: string
-      WRT_PACKAGE:
-        required: false
-        type: string
       WRT_TEST:
         required: false
         type: string
@@ -48,7 +45,6 @@ env:
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: ${{inputs.WRT_REPO}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
-  WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
 jobs:
