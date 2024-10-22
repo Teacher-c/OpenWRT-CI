@@ -13,7 +13,7 @@ https://github.com/VIKINGYFY/immortalwrt.git
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-Redmi-AX6、X86。
+IPQ8074、X86、MT7621。
 
 # 目录简要说明：
 
