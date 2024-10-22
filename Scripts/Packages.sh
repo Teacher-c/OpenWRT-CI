@@ -13,9 +13,9 @@ UPDATE_PACKAGE() {
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
 	if [[ $PKG_SPECIAL == "pkg" ]]; then
-		cp -rf $(find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune) ./apps/
+		cp -rf $(find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune) ./
                 if [[ $PKG_REPO == "immortalwrt/luci" ]]; then
-			cp -rf ./$REPO_NAME/luci.mk ./
+			cp -rf ./$REPO_NAME/luci.mk ../
                 fi
 		rm -rf ./$REPO_NAME/
 	elif [[ $PKG_SPECIAL == "name" ]]; then
