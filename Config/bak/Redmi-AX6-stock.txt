@@ -1,0 +1,90 @@
+#Redmi-AX6
+
+#####################################################################
+# Target platform
+#####################################################################
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq807x=y
+CONFIG_TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6-stock=y
+
+#####################################################################
+# Disable Ath10k 
+#####################################################################
+CONFIG_PACKAGE_ath10k-board-qca9887=n
+CONFIG_PACKAGE_ath10k-firmware-qca9887-ct=n
+CONFIG_PACKAGE_kmod-ath10k-ct-smallbuffers=n
+CONFIG_ATH10K-CT_LEDS=n
+
+#####################################################################
+# Compiler Optimization
+#####################################################################
+CONFIG_BUILD_PATENTED=y
+# Use ccache to speed up subsequent builds
+CONFIG_CCACHE=y
+CONFIG_DEVEL=y
+CONFIG_EXPERIMENTAL=y
+CONFIG_TOOLCHAINOPTS=y
+CONFIG_TARGET_OPTIONS=y
+CONFIG_TARGET_OPTIMIZATION="-O2 -pipe -mcpu=cortex-a53+crc+crypto"
+CONFIG_USE_GC_SECTIONS=y
+
+# Kernel Config
+CONFIG_COLLECT_KERNEL_DEBUG=y
+CONFIG_KERNEL_PERF_EVENTS=y
+CONFIG_KERNEL_DYNAMIC_DEBUG=y
+CONFIG_KERNEL_ARM_PMU=y
+CONFIG_KERNEL_ARM_PMUV3=y
+CONFIG_KERNEL_PREEMPT_NONE=y
+CONFIG_KERNEL_PREEMPT_NONE_BUILD=y
+
+# Reduce kernel module size
+CONFIG_ATH11K_DEBUGFS_HTT_STATS=n
+CONFIG_ATH11K_DEBUGFS_STA=n
+
+#####################################################################
+# SSL Configuration
+#####################################################################
+# Use OpenSSL as the preferred SSL library
+CONFIG_PACKAGE_libustream-openssl=y
+CONFIG_PACKAGE_libustream-mbedtls=n
+CONFIG_PACKAGE_libopenssl=y
+CONFIG_LUA_ECO_OPENSSL=y
+CONFIG_LUA_ECO_MBEDTLS=n
+# Optimize OpenSSL for speed over size
+CONFIG_OPENSSL_OPTIMIZE_SPEED=y
+
+#####################################################################
+# LUCI (the web interface)
+#####################################################################
+CONFIG_PACKAGE_luci=y
+# Enable HTTPS support
+CONFIG_PACKAGE_luci-ssl-openssl=y
+
+#####################################################################
+# Wireless Configuration
+#####################################################################
+# Enable WPA3 and Mesh support
+CONFIG_PACKAGE_wpad-mesh-openssl=y
+# Avoid using mbedTLS for consistency across packages and to avoid mixed SSL libraries.
+CONFIG_PACKAGE_wpad-basic-mbedtls=n
+
+#####################################################################
+# Library Optimization
+#####################################################################
+# Optimize common libraries (zlib, zstd) for speed, improving performance on compression tasks.
+CONFIG_ZLIB_OPTIMIZE_SPEED=y
+CONFIG_ZSTD_OPTIMIZE_O3=y
+
+#####################################################################
+# Feeds Configuration
+#####################################################################
+# Prevent opkg from adding custom feeds to /etc/opkg/distfeeds.conf in the final image.
+CONFIG_FEED_nss_packages=n
+CONFIG_FEED_sqm_scripts_nss=n
+
+#####################################################################
+# Kernel Modules
+#####################################################################
+# Network
+# Bridge module support for working with nftables for more complex firewall setups.
+CONFIG_PACKAGE_kmod-nft-bridge=y
