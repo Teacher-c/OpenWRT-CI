@@ -2,7 +2,7 @@
 #Select the target platform
 CONFIG_TARGET_ramips=y
 CONFIG_TARGET_ramips_mt7621=y
-CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_mi-router-ac2100=y
-CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_mi-router-cr6608=y
+CONFIG_TARGET_DEVICE_ramips_mt7621_DEVICE_xiaomi_mi-router-ac2100=y
+CONFIG_TARGET_DEVICE_ramips_mt7621_DEVICE_xiaomi_mi-router-cr6608=y
 
 
