@@ -20,9 +20,6 @@ on:
         default: 'main'
         required: true
         type: string
-      PACKAGE:
-        required: false
-        type: string
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'true'
@@ -57,7 +54,5 @@ jobs:
       WRT_BRANCH: ${{inputs.BRANCH}}
       #源码名称
       WRT_SOURCE: ${{inputs.SOURCE}}
-      #插件调整
-      WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST}}
