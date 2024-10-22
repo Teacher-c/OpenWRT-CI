@@ -5,7 +5,7 @@ PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
 #预置OpenClash内核和数据
 if [ -d *"openclash"* ]; then
 	CORE_VER="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version"
-	CORE_TYPE=$(echo $WRT_TARGET | grep -Eiq "64|86" && echo "amd64" || echo "arm64")
+	CORE_TYPE=$(echo $WRT_TARGET | grep -Eiq "64|86" && echo "amd64" || echo $WRT_TARGET | grep -Eiq "IPQ807X" && echo "arm64" || echo $WRT_TARGET | grep -Eiq "MT7621" && echo "mipsle-softfloat")
 	CORE_TUN_VER=$(curl -sL $CORE_VER | sed -n "2{s/\r$//;p;q}")
 
 	CORE_DEV="https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux-$CORE_TYPE.tar.gz"
