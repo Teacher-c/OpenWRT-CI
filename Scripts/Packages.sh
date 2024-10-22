@@ -28,7 +28,7 @@ UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
 
 
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
-	UPDATE_PACKAGE "qmi-wwan" "immortalwrt/wwan-packages" "master" "pkg"
+	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
 fi
 
 #更新软件包版本
