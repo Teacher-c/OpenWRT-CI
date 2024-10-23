@@ -28,12 +28,3 @@ if [[ "$WRT_TARGET" == *"86|64"* ]]; then
   echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
   curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
 fi
-
-# 无线配置
-if [[ "$WRT_TARGET" != *"86|64"* ]]; then
-  # Enable WPA3 and Mesh support
-  echo "CONFIG_PACKAGE_wpad-mesh-openssl=y" >> .config
-  # Avoid using mbedTLS for consistency across packages and to avoid mixed SSL libraries.
-  echo "CONFIG_PACKAGE_wpad-basic-mbedtls=n" >> .config
-fi
-
