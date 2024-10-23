@@ -108,7 +108,11 @@ jobs:
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
 
           if [[ $WRT_REPO != *"immortalwrt"* ]]; then
-          	      git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
+          	      git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
+          fi
+
+          if [[ $WRT_REPO == *"qosmio/openwrt-ipq"* ]]; then
+          	      git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-IPQ_MEM_PROFILE-Support.patch
           fi
 
       - name: Check Scripts
