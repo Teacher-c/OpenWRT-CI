@@ -31,5 +31,5 @@ fi
 
 #添加ax6和3600大分区stock-layout支持
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
-	      git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
+         git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
 fi
