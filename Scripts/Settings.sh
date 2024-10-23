@@ -30,6 +30,6 @@ if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt"; then
 fi
 
 #添加ax6和3600大分区stock-layout支持
-if [[ $WRT_REPO != *"immortalwrt"* ]]; then
+if [[ $WRT_REPO == *openwrt"* ]]; then
          git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
 fi
