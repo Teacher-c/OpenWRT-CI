@@ -31,7 +31,7 @@ on:
       WRT_SOURCE:
         required: false
         type: string
-      WRT_TEST:
+      WRT_CACHES:
         required: false
         type: string
 
@@ -45,7 +45,7 @@ env:
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: ${{inputs.WRT_REPO}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
-  WRT_TEST: ${{inputs.WRT_TEST}}
+  WRT_CACHES: ${{inputs.WRT_CACHES}}
 
 jobs:
   core:
@@ -111,18 +111,13 @@ jobs:
           	      git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
           fi
 
-          if [[ $WRT_REPO == *"qosmio/openwrt-ipq"* ]]; then
-          	      echo "not apply IPQ_MEM_PROFILE-Support.patch"
-          	      #git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-IPQ_MEM_PROFILE-Support.patch
-          fi
-
       - name: Check Scripts
         run: |
           find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
       - name: Check Caches
         id: check-cache
-        if: env.WRT_TEST != 'true'
+        if: env.WRT_CACHES == 'true'
         uses: actions/cache@main
         with:
           key: ${{env.WRT_TARGET}}-${{env.WRT_VER}}-${{env.WRT_HASH}}
@@ -132,7 +127,7 @@ jobs:
             ./wrt/staging_dir/tool*
 
       - name: Update Caches
-        if: env.WRT_TEST != 'true'
+        if: env.WRT_CACHES == 'true'
         run: |
           if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
             sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
@@ -177,14 +172,12 @@ jobs:
           make defconfig -j$(nproc)
 
       - name: Download Packages
-        if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
           make download -j$(nproc)
 
       - name: Compile Firmware
-        if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
