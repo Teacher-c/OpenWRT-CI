@@ -24,7 +24,7 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 #echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #添加turboacc
-if [[ "$WRT_SOURCE" == *"immortalwrt/immortalwrt"* || "$WRT_SOURCE" == *"openwrt/openwrt"* ]]; then
+if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt"; then
          echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
          curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
 fi
