@@ -60,17 +60,6 @@ popd
   
 
 if [[ $OWRT_URL == *"openwrt"* ]] ; then
-  
-  #添加luci-app-zerotier及luci.mk
-  # 克隆仓库
-  git clone https://github.com/immortalwrt/luci.git tmp_luci
-  # 移动 luci.mk 文件到根目录（确认文件不存在或者允许覆盖）
-  mv tmp_luci/luci.mk ./
-  # 将 luci-app-zerotier 移动到 package 目录
-  mv tmp_luci/applications/luci-app-zerotier ./package/
-  # 删除临时文件夹
-  rm -rf tmp_luci
-
   #添加CPU,温度，以及nss占用信息显示
   #rm -rf feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
   #rm -rf feeds/luci/modules/luci-mod-status/root/usr/share/rpcd/acl.d/luci-mod-status.json
