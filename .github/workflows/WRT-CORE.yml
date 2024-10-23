@@ -112,7 +112,7 @@ jobs:
           fi
 
           if [[ $WRT_REPO == *"qosmio/openwrt-ipq"* ]]; then
-                  echo "not apply IPQ_MEM_PROFILE-Support.patch"
+          	      echo "not apply IPQ_MEM_PROFILE-Support.patch"
           	      #git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-IPQ_MEM_PROFILE-Support.patch
           fi
 
