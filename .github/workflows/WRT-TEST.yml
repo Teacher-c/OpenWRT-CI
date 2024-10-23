@@ -15,7 +15,7 @@ on:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, qosmio/openwrt-ipq, breeze303/openwrt-ipq, Teacher-c/immortalwrt]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, qosmio/openwrt-ipq, breeze303/openwrt-ipq, Teacher-c/immortalwrt, Teacher-c/openwrt]
       BRANCH:
         default: 'main'
         required: true
