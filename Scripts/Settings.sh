@@ -24,7 +24,7 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 #echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #添加turboacc
-if [[ "$WRT_TARGET" == *"86|64"* ]]; then
+if [[ "$WRT_TARGET" == *"X86"* ]]; then
   echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
   curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
 fi
