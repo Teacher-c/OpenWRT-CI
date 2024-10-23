@@ -124,7 +124,7 @@ jobs:
         if: env.WRT_TEST != 'true'
         uses: actions/cache@main
         with:
-          key: ${{env.WRT_TARGET}}-${{env.WRT_VER}}-${{env.WRT_HASH}}-
+          key: ${{env.WRT_TARGET}}-${{env.WRT_VER}}-${{env.WRT_HASH}}
           path: |
             ./wrt/.ccache
             ./wrt/staging_dir/host*
