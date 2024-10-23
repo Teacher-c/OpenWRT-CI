@@ -1,5 +1,5 @@
 #Redmi-AX6
-#平台机型设置
+#平台机型设置,CONFIG_TARGET_改为CONFIG_TARGET_DEVICE_支持多机型同时编译
 CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq807x=y
 #CONFIG_TARGET_qualcommax_ipq807x_DEVICE_redmi_ax6=y
