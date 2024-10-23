@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       CACHES:
-        description: '启用上次缓存编译。'
+        description: '使用上次编译缓存'
         default: 'true'
         required: false
         type: boolean
@@ -52,5 +52,5 @@ jobs:
       WRT_BRANCH: ${{matrix.BRANCH || 'main'}}
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
-      #仅输出配置文件
+      #使用上次编译缓存
       WRT_CACHES: ${{inputs.CACHES}}
