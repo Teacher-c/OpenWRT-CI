@@ -20,7 +20,7 @@ on:
         default: 'main'
         required: true
         type: choice
-        options: [main, master]
+        options: [main, master, qualcommax-6.x-nss-wifi]
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'false'
