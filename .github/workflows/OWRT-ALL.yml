@@ -14,7 +14,7 @@ on:
       CACHES:
         description: '使用上次编译缓存'
         default: 'true'
-        required: false
+        required: true
         type: boolean
 
 #CI权限
