@@ -23,8 +23,8 @@ on:
         options: [main, master, qualcommax-6.x-nss-wifi]
       CACHES:
         description: '使用上次编译缓存'
-        default: 'true'
-        required: true
+        default: 'false'
+        required: false
         type: boolean
 
 #CI权限
