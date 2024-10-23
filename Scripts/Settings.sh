@@ -24,7 +24,12 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 #echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #添加turboacc
-if [[ "$WRT_TARGET" == *"X86"* ]]; then
-  echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
-  curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+if [[ "$WRT_SOURCE" == *"immortalwrt/immortalwrt"* || "$WRT_SOURCE" == *"openwrt/openwrt"* ]]; then
+         echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
+         curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+fi
+
+#添加ax6和3600大分区stock-layout支持
+if [[ $WRT_REPO != *"immortalwrt"* ]]; then
+	      git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
 fi
