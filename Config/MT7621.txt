@@ -1,5 +1,5 @@
 #AC2100 CR6608
-平台机型设置,CONFIG_TARGET_改为CONFIG_TARGET_DEVICE_支持多机型同时编译
+#平台机型设置,CONFIG_TARGET_改为CONFIG_TARGET_DEVICE_支持多机型同时编译
 CONFIG_TARGET_ramips=y
 CONFIG_TARGET_ramips_mt7621=y
 #CONFIG_TARGET_ramips_mt7621_DEVICE_xiaomi_mi-router-ac2100=y
