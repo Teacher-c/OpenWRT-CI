@@ -30,7 +30,7 @@ UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
 UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
 
 
-if [[ $WRT_REPO != *"immortalwrt"* ]]; then
+if [[ $WRT_REPO != *"immortalwrt"* ]] || [[ $WRT_REPO != *"LiBwrt-op/openwrt-6.x"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
 fi
 
