@@ -20,7 +20,7 @@ on:
         default: 'main'
         required: true
         type: choice
-        options: [main, master, qualcommax-6.x-nss-wifi, openwrt-24.10]
+        options: [main, master, 24.10-nss, openwrt-24.10]
       CACHES:
         description: '使用上次编译缓存'
         default: 'false'
