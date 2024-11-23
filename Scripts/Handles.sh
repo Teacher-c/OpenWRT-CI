@@ -40,7 +40,6 @@ if [ -d *"openclash"* ]; then
 	curl -sL -o dev.tar.gz $CORE_DEV && tar -zxf dev.tar.gz && echo "dev done!"
 
 	chmod +x ./* && rm -rf ./*.gz
- 	rm -rf ./rule_provider/*
 
 	cd $PKG_PATCH && echo "openclash date has been updated!"
 fi
