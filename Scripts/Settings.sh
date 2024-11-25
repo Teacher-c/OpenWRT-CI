@@ -28,7 +28,7 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt" || [ "$WRT_TARGET" == "X86" ]; then
          echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
          echo "start apply patch for turboacc!"
-         curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+         #curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
 fi
 
 #添加ax6和3600大分区stock-layout支持
