@@ -26,13 +26,13 @@ UPDATE_PACKAGE() {
 #UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev" "pkg"
-#UPDATE_PACKAGE "packages_lang_golang" "sbwml/packages_lang_golang" "23.x"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
-#UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
+UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
 
 
-if [[ $WRT_REPO != *"immortalwrt"* ]] || [[ $WRT_REPO != *"LiBwrt"* ]]; then
+if [[ $WRT_REPO == *"openwrt"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
+        UPDATE_PACKAGE "packages_lang_golang" "sbwml/packages_lang_golang" "23.x"
 fi
 
 #更新软件包版本
