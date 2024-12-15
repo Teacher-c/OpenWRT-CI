@@ -132,11 +132,9 @@ jobs:
 
             echo "toolchain skiped done!"
           else
-            gh extension install actions/gh-actions-cache
-
-            CACHE_LIST=$(gh actions-cache list --key "$WRT_TARGET-$WRT_VER" | cut -f 1)
+            CACHE_LIST=$(gh cache list --key "$WRT_TARGET-$WRT_VER" | cut -f 1)
             for CACHE_KEY in $CACHE_LIST; do
-               gh actions-cache delete $CACHE_KEY --confirm
+               gh cache delete $CACHE_KEY
             done
 
             echo "caches cleanup done!"
