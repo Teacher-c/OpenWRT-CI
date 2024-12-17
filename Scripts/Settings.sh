@@ -29,10 +29,13 @@ if echo "$WRT_SOURCE" | grep -qE "immortalwrt/immortalwrt|openwrt/openwrt" || [ 
          echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> .config
          echo "start apply patch for turboacc!"
          #curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+         echo "apply patch for turboacc finished!"
 fi
 
 #添加ax6和3600大分区stock-layout支持
 if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
          echo "start apply patch to ax6 and ax3600 stock layout!"
          git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-qualcommax-stock-layout-for-xiaomi-ax3600-and-redmi-ax6.patch
+         git apply $GITHUB_WORKSPACE/Config/bak/0001-Add-IPQ_MEM_PROFILE-Support.patch
+         echo "apply patch to ax6 and ax3600 stock layout finished!"
 fi
