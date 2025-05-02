@@ -37,3 +37,7 @@ CONFIG_ATH10K-CT_LEDS=n
 #禁止添加到opkg update
 CONFIG_FEED_nss_packages=n
 CONFIG_FEED_sqm_scripts_nss=n
+
+#设置NSS版本
+CONFIG_NSS_FIRMWARE_VERSION_11_4=n
+CONFIG_NSS_FIRMWARE_VERSION_12_5=y
