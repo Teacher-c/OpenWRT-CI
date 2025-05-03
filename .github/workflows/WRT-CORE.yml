@@ -53,9 +53,6 @@ jobs:
     name: ${{inputs.WRT_SOURCE}}
     runs-on: ubuntu-22.04
     steps:
-      - name: Checkout Projects
-        uses: actions/checkout@main
-
       - name: Before freeing up disk space
         run: |
           echo "Before freeing up disk space"
@@ -101,6 +98,9 @@ jobs:
           echo "=============================================================================="
           df -hT
           echo "=============================================================================="
+          
+      - name: Checkout Projects
+        uses: actions/checkout@main
         
       - name: Initialization Environment
         env:
