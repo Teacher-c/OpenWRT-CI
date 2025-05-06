@@ -31,6 +31,8 @@ if [ -d *"openclash"* ]; then
 
 	chmod +x ./* && rm -rf ./*.gz
 
+        cd $PKG_PATCH && echo "openclash core has been updated!"
+        
 	#GEO_MMDB="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
 	GEO_SITE="https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat"
 	GEO_IP="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat"
@@ -41,7 +43,7 @@ if [ -d *"openclash"* ]; then
 	curl -sL -o GeoSite.dat $GEO_SITE && echo "GeoSite.dat done!"
 	curl -sL -o GeoIP.dat $GEO_IP && echo "GeoIP.dat done!"
 
-	cd $PKG_PATCH && echo "openclash date has been updated!"
+	cd $PKG_PATCH && echo "openclash GeoDate has been updated!"
 fi
 
 #修改qca-nss-drv启动顺序
