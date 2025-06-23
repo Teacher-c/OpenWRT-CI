@@ -42,38 +42,43 @@ if [ -d *"openclash"* ]; then
 fi
 
 #修改qca-nss-drv启动顺序
-#NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
-#if [ -f "$NSS_DRV" ]; then
-#	sed -i 's/START=.*/START=85/g' $NSS_DRV
-# 
-#	cd $PKG_PATH && echo "qca-nss-drv has been fixed!"
-#fi
+NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
+if [ -f "$NSS_DRV" ]; then
+	echo " "
 
-#修改qca-nss-pbuf启动顺序
-#NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
-#if [ -f "$NSS_PBUF" ]; then
-#	sed -i 's/START=.*/START=86/g' $NSS_PBUF
-#
-#	cd $PKG_PATH && echo "qca-nss-pbuf has been fixed!"
-#fi
+	sed -i 's/START=.*/START=85/g' $NSS_DRV
 
-#移除Shadowsocks组件
-PW_FILE=$(find ./ -maxdepth 3 -type f -wholename "*/luci-app-passwall/Makefile")
-if [ -f "$PW_FILE" ]; then
-	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev/,/x86_64/d' $PW_FILE
-	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default n/d' $PW_FILE
-	sed -i '/Shadowsocks_NONE/d; /Shadowsocks_Libev/d; /ShadowsocksR/d' $PW_FILE
-
-	cd $PKG_PATCH && echo "passwall has been fixed!"
+	cd $PKG_PATH && echo "qca-nss-drv has been fixed!"
 fi
 
-SP_FILE=$(find ./ -maxdepth 3 -type f -wholename "*/luci-app-ssr-plus/Makefile")
-if [ -f "$SP_FILE" ]; then
-	sed -i '/default PACKAGE_$(PKG_NAME)_INCLUDE_Shadowsocks_Libev/,/libev/d' $SP_FILE
-	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/x86_64/d' $SP_FILE
-	sed -i '/Shadowsocks_NONE/d; /Shadowsocks_Libev/d; /ShadowsocksR/d' $SP_FILE
+#修改qca-nss-pbuf启动顺序
+NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
+if [ -f "$NSS_PBUF" ]; then
+	echo " "
 
-	cd $PKG_PATCH && echo "ssr-plus has been fixed!"
+	sed -i 's/START=.*/START=86/g' $NSS_PBUF
+
+	cd $PKG_PATH && echo "qca-nss-pbuf has been fixed!"
+fi
+
+#修复TailScale配置文件冲突
+TS_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/tailscale/Makefile")
+if [ -f "$TS_FILE" ]; then
+	echo " "
+
+	sed -i '/\/files/d' $TS_FILE
+
+	cd $PKG_PATH && echo "tailscale has been fixed!"
+fi
+
+#修复Rust编译失败
+RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+if [ -f "$RUST_FILE" ]; then
+	echo " "
+
+	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+
+	cd $PKG_PATH && echo "rust has been fixed!"
 fi
 
 
