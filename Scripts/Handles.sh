@@ -48,5 +48,5 @@ if [ -d *"openclash"* ]; then
     curl -sL -o FakeHTTP.tar.gz $FakeHTTP && tar -zxf FakeHTTP.tar.gz && echo "FakeHTTP done!"
 	curl -sL -o FakeSIP.tar.gz $FakeSIP && tar -zxf FakeSIP.tar.gz && echo "FakeSIP done!"
     chmod +x ./* && rm -rf ./*.gz
-	cd $PKG_PATCH && echo "FakeSIP FakeHTTP has been updated!
+	cd $PKG_PATCH && echo "FakeSIP FakeHTTP has been updated!"
 fi
