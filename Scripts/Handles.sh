@@ -49,6 +49,7 @@ if [ -d *"openclash"* ]; then
  	 }
 	  print
 	}' ./yml_change.sh > ./yml_change.sh.bak && mv ./yml_change.sh.bak ./yml_change.sh
+    cd $PKG_PATCH && echo "ls -l /sys/class/net |awk '{print \$9}' 2>&1 has been replace"
 fi
 
 #添加FakeSIP和FakeHTTP
