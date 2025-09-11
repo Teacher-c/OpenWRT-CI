@@ -39,7 +39,18 @@ if [ -d *"openclash"* ]; then
 	curl -sL -o GeoSite.dat $GEO_SITE && echo "GeoSite.dat done!"
 	curl -sL -o GeoIP.dat $GEO_IP && echo "GeoIP.dat done!"
 	cd $PKG_PATCH && echo "openclash GeoDate has been updated!"
+
+	#修改"ls -l /sys/class/net/ |awk '{print \$9}' 2>&1"方法导致的内存OOM
+    cd ./luci-app-openclash/root/usr/share/openclash/
+	awk '{
+ 	 if ($0 ~ /ls[[:space:]]+-l[[:space:]]+\/sys\/class\/net\/.*\|[[:space:]]*awk/) {
+   	 print "for f in /sys/class/net/*;do echo ${f##*/};done";
+  	  next
+ 	 }
+	  print
+	}' ./yml_change.sh > ./yml_change.sh.bak && mv ./yml_change.sh.bak ./yml_change.sh
 fi
+
 #添加FakeSIP和FakeHTTP
 if [ -d *"openclash"* ]; then
 	FakeHTTP="https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
@@ -49,4 +60,11 @@ if [ -d *"openclash"* ]; then
 	curl -sL -o FakeSIP.tar.gz $FakeSIP && tar -zxf FakeSIP.tar.gz && echo "FakeSIP done!"
     chmod +x ./* && rm -rf ./*.gz
 	cd $PKG_PATCH && echo "FakeSIP FakeHTTP has been updated!"
+fi
+
+#修改argon主题字体和颜色
+if [ -d *"argon"* ]; then
+	cd ./luci-theme-argon/
+	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
+	cd $PKG_PATH && echo "theme-argon has been fixed!"
 fi
