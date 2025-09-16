@@ -69,19 +69,19 @@ if [ -d *"luci-theme-argon"* ]; then
 	cd ./luci-theme-argon/
 	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
 	sed -i "s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" ./luci-app-argon-config/root/etc/config/argon
-	cd $PKG_PATH && echo "theme-argon has been fixed!"
+	cd $PKG_PATCH && echo "theme-argon has been fixed!"
 fi
 
 #修改qca-nss-drv启动顺序
 NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
 if [ -f "$NSS_DRV" ]; then
 	sed -i 's/START=.*/START=85/g' $NSS_DRV
-	cd $PKG_PATH && echo "qca-nss-drv has been fixed!"
+	cd $PKG_PATCH && echo "qca-nss-drv has been fixed!"
 fi
 
 #修改qca-nss-pbuf启动顺序
 NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
 if [ -f "$NSS_PBUF" ]; then
 	sed -i 's/START=.*/START=86/g' $NSS_PBUF
-	cd $PKG_PATH && echo "qca-nss-pbuf has been fixed!"
+	cd $PKG_PATCH && echo "qca-nss-pbuf has been fixed!"
 fi
