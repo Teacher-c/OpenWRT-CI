@@ -59,7 +59,7 @@ if [ -d *"openclash"* ]; then
     curl -sL -o FakeHTTP.tar.gz $FakeHTTP && tar -zxf FakeHTTP.tar.gz
 	curl -sL -o FakeSIP.tar.gz $FakeSIP && tar -zxf FakeSIP.tar.gz
     mv ./fakehttp-linux-$CORE_TYPE/fakehttp ./ && echo "FakeHTTP done!" && rm -rf ./fakehttp-linux-$CORE_TYPE
-	mv ./fakesip-linux-$CORE_TYPEE/fakesip ./ && echo "FakeSIP done!" && rm -rf ./fakesip-linux-$CORE_TYPE
+	mv ./fakesip-linux-$CORE_TYPE/fakesip ./ && echo "FakeSIP done!" && rm -rf ./fakesip-linux-$CORE_TYPE
     chmod +x ./fakehttp ./fakesip && rm -rf ./*.gz
 	cd $PKG_PATCH && echo "FakeSIP FakeHTTP has been updated!"
 fi
