@@ -34,8 +34,8 @@ if [ -d *"openclash"* ]; then
 	cd $PKG_PATCH && echo "openclash GeoDate has been updated!"
 
     #预置训练模型
-    cd ./luci-app-openclash/root/etc/openclash/
 	LightGBMModel="https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin"
+    cd ./luci-app-openclash/root/etc/openclash/
     curl -sL -o Model.bin $LightGBMModel && echo "LightGBMModel done!"
 	cd $PKG_PATCH
  
