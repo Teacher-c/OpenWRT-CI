@@ -56,9 +56,11 @@ if [ -d *"openclash"* ]; then
 	FakeHTTP="https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
 	FakeSIP="https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
     cd ./luci-app-openclash/root/etc/openclash/
-    curl -sL -o FakeHTTP.tar.gz $FakeHTTP && tar -zxf FakeHTTP.tar.gz && echo "FakeHTTP done!"
-	curl -sL -o FakeSIP.tar.gz $FakeSIP && tar -zxf FakeSIP.tar.gz && echo "FakeSIP done!"
-    chmod +x ./* && rm -rf ./*.gz
+    curl -sL -o FakeHTTP.tar.gz $FakeHTTP && tar -zxf FakeHTTP.tar.gz
+	curl -sL -o FakeSIP.tar.gz $FakeSIP && tar -zxf FakeSIP.tar.gz
+    mv ./fakehttp-linux-$CORE_TYPE/fakehttp ./ && echo "FakeHTTP done!" && rm -rf ./fakehttp-linux-$CORE_TYPE
+	mv ./fakesip-linux-$CORE_TYPEE/fakesip ./ && echo "FakeSIP done!" && rm -rf ./fakesip-linux-$CORE_TYPE
+    chmod +x ./fakehttp ./fakesip && rm -rf ./*.gz
 	cd $PKG_PATCH && echo "FakeSIP FakeHTTP has been updated!"
 fi
 
