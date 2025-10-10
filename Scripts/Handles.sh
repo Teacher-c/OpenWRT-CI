@@ -65,10 +65,10 @@ if [ -d *"openclash"* ]; then
 fi
 
 #修改argon主题字体
+cd ../feeds/luci/themes/
 if [ -d *"luci-theme-argon"* ]; then
-	cd ./luci-theme-argon/
 	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
-	sed -i "s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" ./luci-app-argon-config/root/etc/config/argon
+	sed -i "s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" .../applications/luci-app-argon-config/root/etc/config/argon
 	cd $PKG_PATCH && echo "theme-argon has been fixed!"
 fi
 
