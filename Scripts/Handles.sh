@@ -3,6 +3,7 @@
 PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
 
 #预置OpenClash内核和数据
+cd ../feeds/luci//applications/
 if [ -d *"openclash"* ]; then
 
 	if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
@@ -52,6 +53,7 @@ if [ -d *"openclash"* ]; then
 fi
 
 #添加FakeSIP和FakeHTTP
+cd ../feeds/luci//applications/
 if [ -d *"openclash"* ]; then
 	FakeHTTP="https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
 	FakeSIP="https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
