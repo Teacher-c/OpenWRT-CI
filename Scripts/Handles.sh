@@ -1,10 +1,12 @@
 #!/bin/bash
 
 PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
+APP_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/applications/"
+THEMES_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/themes/"
 
 #预置OpenClash内核和数据
-cd ../feeds/luci//applications/
-if [ -d *"openclash"* ]; then
+cd $APP_PATCH
+if [ -d *"luci-app-openclash"* ]; then
 
 	if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
 	    CORE_TYPE="amd64"
@@ -23,7 +25,7 @@ if [ -d *"openclash"* ]; then
 	mkdir ./core/ && cd ./core/
 	curl -sL -o meta.tar.gz $CORE_MATE && tar -zxf meta.tar.gz && mv -f clash clash_meta && echo "meta done!"
 	chmod +x ./* && rm -rf ./*.gz
-    cd $PKG_PATCH && echo "openclash core has been updated!"
+    cd $APP_PATCH && echo "openclash core has been updated!"
 	
 	GEO_MMDB="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
 	GEO_SITE="https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat"
@@ -32,13 +34,13 @@ if [ -d *"openclash"* ]; then
 	curl -sL -o Country.mmdb $GEO_MMDB && echo "Country.mmdb done!"
 	curl -sL -o GeoSite.dat $GEO_SITE && echo "GeoSite.dat done!"
 	curl -sL -o GeoIP.dat $GEO_IP && echo "GeoIP.dat done!"
-	cd $PKG_PATCH && echo "openclash GeoDate has been updated!"
+	cd $APP_PATCH && echo "openclash GeoDate has been updated!"
 
     #预置训练模型
 	LightGBMModel="https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin"
     cd ./luci-app-openclash/root/etc/openclash/
     curl -sL -o Model.bin $LightGBMModel && echo "LightGBMModel done!"
-	cd $PKG_PATCH
+	cd $APP_PATCH
  
 	#修改"ls -l /sys/class/net/ |awk '{print \$9}' 2>&1"方法导致的内存OOM
     cd ./luci-app-openclash/root/usr/share/openclash/
@@ -49,12 +51,12 @@ if [ -d *"openclash"* ]; then
  	 }
 	  print
 	}' ./yml_change.sh > ./yml_change.sh.bak && mv ./yml_change.sh.bak ./yml_change.sh
-    cd $PKG_PATCH && echo "ls -l /sys/class/net |awk '{print \$9}' 2>&1 has been replace"
+    cd $APP_PATCH && echo "ls -l /sys/class/net |awk '{print \$9}' 2>&1 has been replace"
 fi
 
 #添加FakeSIP和FakeHTTP
-cd ../feeds/luci//applications/
-if [ -d *"openclash"* ]; then
+cd $APP_PATCH
+if [ -d *"luci-app-openclash"* ]; then
 	FakeHTTP="https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
 	FakeSIP="https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
     cd ./luci-app-openclash/root/etc/openclash/
@@ -63,26 +65,26 @@ if [ -d *"openclash"* ]; then
     mv ./fakehttp-linux-$CORE_TYPE/fakehttp ./ && echo "FakeHTTP done!" && rm -rf ./fakehttp-linux-$CORE_TYPE
 	mv ./fakesip-linux-$CORE_TYPE/fakesip ./ && echo "FakeSIP done!" && rm -rf ./fakesip-linux-$CORE_TYPE
     chmod +x ./fakehttp ./fakesip && rm -rf ./*.gz
-	cd $PKG_PATCH && echo "FakeSIP FakeHTTP has been updated!"
+	cd $APP_PATCH && echo "FakeSIP FakeHTTP has been updated!"
 fi
 
 #修改argon主题字体
-cd ../feeds/luci/themes/
+cd $THEMES_PATCH
 if [ -d *"luci-theme-argon"* ]; then
 	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
-	sed -i "s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" .../applications/luci-app-argon-config/root/etc/config/argon
-	cd $PKG_PATCH && echo "theme-argon has been fixed!"
+	sed -i "s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" $APP_PATCH/luci-app-argon-config/root/etc/config/argon
+	cd $APP_PATCH && echo "theme-argon has been fixed!"
 fi
 
 #修改qca-nss-drv启动顺序
-NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
+NSS_DRV="$GITHUB_WORKSPACE/wrt/feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
 if [ -f "$NSS_DRV" ]; then
 	sed -i 's/START=.*/START=85/g' $NSS_DRV
 	cd $PKG_PATCH && echo "qca-nss-drv has been fixed!"
 fi
 
 #修改qca-nss-pbuf启动顺序
-NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
+NSS_PBUF="$GITHUB_WORKSPACE/wrt/package/kernel/mac80211/files/qca-nss-pbuf.init"
 if [ -f "$NSS_PBUF" ]; then
 	sed -i 's/START=.*/START=86/g' $NSS_PBUF
 	cd $PKG_PATCH && echo "qca-nss-pbuf has been fixed!"
