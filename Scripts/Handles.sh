@@ -2,7 +2,7 @@
 
 PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
 APP_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/applications/"
-THEMES_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/themes/"
+#THEMES_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/themes/"
 
 #预置OpenClash内核和数据
 cd $APP_PATCH
@@ -68,24 +68,4 @@ if [ -d *"luci-app-openclash"* ]; then
 	cd $APP_PATCH && echo "FakeSIP FakeHTTP has been updated!"
 fi
 
-#修改argon主题字体
-cd $THEMES_PATCH
-if [ -d *"luci-theme-argon"* ]; then
-	sed -i "/font-weight:/ { /important/! { /\/\*/! s/:.*/: var(--font-weight);/ } }" $(find ./luci-theme-argon -type f -iname "*.css")
-	sed -i "s/'0.2'/'0.5'/; s/'none'/'bing'/; s/'600'/'normal'/" $APP_PATCH/luci-app-argon-config/root/etc/config/argon
-	cd $APP_PATCH && echo "theme-argon has been fixed!"
-fi
-
-#修改qca-nss-drv启动顺序
-NSS_DRV="$GITHUB_WORKSPACE/wrt/feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
-if [ -f "$NSS_DRV" ]; then
-	sed -i 's/START=.*/START=85/g' $NSS_DRV
-	cd $PKG_PATCH && echo "qca-nss-drv has been fixed!"
-fi
-
-#修改qca-nss-pbuf启动顺序
-NSS_PBUF="$GITHUB_WORKSPACE/wrt/package/kernel/mac80211/files/qca-nss-pbuf.init"
-if [ -f "$NSS_PBUF" ]; then
-	sed -i 's/START=.*/START=86/g' $NSS_PBUF
-	cd $PKG_PATCH && echo "qca-nss-pbuf has been fixed!"
-fi
+cd $PKG_PATCH
