@@ -55,5 +55,5 @@ UPDATE_PACKAGE() {
 
 if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
 	UPDATE_PACKAGE "luci-app-zerotier" "immortalwrt/luci" "master" "pkg"
-        UPDATE_PACKAGE "packages_lang_golang" "sbwml/packages_lang_golang" "23.x"
+    UPDATE_PACKAGE "packages_lang_golang" "sbwml/packages_lang_golang" "23.x"
 fi
