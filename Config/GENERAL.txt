@@ -16,6 +16,7 @@ CONFIG_PACKAGE_kmod-wireguard=n
 CONFIG_PACKAGE_luci-proto-wireguard=n
 CONFIG_PACKAGE_easytier=n
 CONFIG_PACKAGE_luci-app-easytier=n
+CONFIG_PACKAGE_attendedsysupgrade-common=n
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
 
 #禁止dnsmasq，启用dnsmasq-full
@@ -28,6 +29,10 @@ CONFIG_PACKAGE_kmod-usb3=n
 CONFIG_PACKAGE_kmod-usb-ohci=n
 CONFIG_PACKAGE_kmod-usb-uhci=n
 CONFIG_PACKAGE_kmod-usb-core=n
+CONFIG_PACKAGE_kmod-usb-common=n
+CONFIG_PACKAGE_kmod-usb-storage=n
+CONFIG_PACKAGE_kmod-usb-storage-extras=n
+CONFIG_PACKAGE_kmod-usb-storage-uas=n
 CONFIG_PACKAGE_kmod-usb-dwc3=n
 CONFIG_PACKAGE_kmod-usb-dwc3-qcom=n
 
