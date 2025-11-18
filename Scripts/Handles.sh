@@ -84,10 +84,9 @@ if [ -f "$NSS_PBUF" ]; then
 	cd $PKG_PATCH && echo "qca-nss-pbuf has been fixed!"
 fi
 
-
 #移除luci-app-attendedsysupgrade概览页面
-#ASU_FILE=$(find ../feeds/luci/applications/luci-app-attendedsysupgrade/ -type f -name "11_upgrades.js")
-#if [ -f "$ASU_FILE" ]; then
-#	rm -rf $ASU_FILE
-#	cd $PKG_PATCH && echo "attendedsysupgrade has been fixed!"
-#fi
+ASU_FILE=$(find ../feeds/luci/applications/luci-app-attendedsysupgrade/ -type f -name "11_upgrades.js")
+if [ -f "$ASU_FILE" ]; then
+	rm -rf $ASU_FILE
+	cd $PKG_PATCH && echo "attendedsysupgrade has been fixed!"
+fi
