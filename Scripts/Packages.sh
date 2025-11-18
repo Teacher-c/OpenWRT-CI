@@ -59,4 +59,4 @@ if [[ $WRT_REPO == *"openwrt"* ]] && [[ $WRT_REPO != *"LiBwrt"* ]]; then
 fi
 
 ##删除attendedsysupgrade
-find ../feeds/luci ../feeds/packages -maxdepth 3 -type d -iname '*attendedsysupgrade*' -print -exec rm -rf {} + 2>/dev/null
+#find ../feeds/luci ../feeds/packages -maxdepth 3 -type d -iname '*attendedsysupgrade*' -print -exec rm -rf {} + 2>/dev/null
