@@ -54,6 +54,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: "Optimize Disk Space"
+        if: false
         uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.1"
         with:
           operate_sudo: "True"
