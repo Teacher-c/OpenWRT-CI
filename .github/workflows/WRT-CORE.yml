@@ -113,6 +113,13 @@ jobs:
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
 
+      - name: Get Kernel Version
+        run: |
+          cd ./wrt/
+          PATCHVER=$(grep -r "KERNEL_PATCHVER:=" target/linux | head -n1 | cut -d= -f2)
+          FULLVER=$(grep -h "LINUX_VERSION-$PATCHVER" include/kernel-* | head -n1 | cut -d= -f2 | tr -d ' ')
+          echo "KERNEL_VERSION=$PATCHVER$FULLVER" >> $GITHUB_ENV
+
       - name: Check Scripts
         run: |
           find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
@@ -214,6 +221,12 @@ jobs:
             find ./bin/targets/ -type f -exec mv -f {} ./upload/ \;
           fi
 
+      - name: Get OpenClash Version
+        run: |
+          OPENCLASH_VER=$(curl -fsSL https://raw.githubusercontent.com/vernesong/OpenClash/refs/heads/master/luci-app-openclash/Makefile \
+          | sed -n 's/^PKG_VERSION:=//p' | head -n1)
+          echo "OPENCLASH_VERSION=$OPENCLASH_VER" >> $GITHUB_ENV
+
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
@@ -230,3 +243,5 @@ jobs:
             设备：${{env.WRT_TYPE}}
             地址：${{env.WRT_IP}}
             密码：${{env.WRT_PW}}
+            内核版本：${{env.KERNEL_VERSION}}
+            OpenClash版本：${{env.OPENCLASH_VERSION}}
