@@ -118,8 +118,9 @@ jobs:
         run: |
           cd ./wrt/
           PATCHVER=$(grep -r "KERNEL_PATCHVER:=" target/linux | head -n1 | cut -d= -f2)
-          FULLVER=$(grep -h "LINUX_VERSION-$PATCHVER" include/kernel-* | head -n1 | cut -d= -f2 | tr -d ' ')
+          FULLVER=$(grep "LINUX_VERSION-$PATCHVER" include/kernel-$PATCHVER | cut -d= -f2 | tr -d ' ')
           echo "KERNEL_VERSION=$PATCHVER$FULLVER" >> $GITHUB_ENV
+          echo "Kernel Version: $PATCHVER$FULLVER"
 
       - name: Check Scripts
         run: |
