@@ -17,9 +17,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Delete Old Releases
+        if: false
         uses: dev-drprasad/delete-older-releases@master
         with:
-          keep_latest: 50
+          keep_latest: 5
           delete_tags: true
 
       - name: Delete Old Workflows
