@@ -227,7 +227,7 @@ jobs:
 
       - name: Get OpenClash Version
         run: |
-          OPENCLASH_VER=$(curl -fsSL https://raw.githubusercontent.com/vernesong/OpenClash/refs/heads/master/luci-app-openclash/Makefile \
+          OPENCLASH_VER=$(curl -fsSL https://raw.githubusercontent.com/immortalwrt/luci/refs/heads/master/applications/luci-app-openclash/Makefile \
           | sed -n 's/^PKG_VERSION:=//p' | head -n1)
           echo "OPENCLASH_VERSION=$OPENCLASH_VER" >> $GITHUB_ENV
 
