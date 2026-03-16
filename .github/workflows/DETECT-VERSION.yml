@@ -1,4 +1,4 @@
-name: detect-version
+name: DETECT-VERSION
 
 on:
   #自动：
@@ -31,6 +31,6 @@ jobs:
           echo "KERNEL_VERSION=$PATCHVER$FULLVER" >> $GITHUB_ENV
           
       - name: Trigger OWRT-ALL
-        if: env.KERNEL_VERSION == '6.12.80' || env.KERNEL_VERSION == '6.12.88'
+        if: env.KERNEL_VERSION == '6.12.74' || env.KERNEL_VERSION == '6.12.88'
         run: |
           gh workflow run OWRT-ALL.yml
