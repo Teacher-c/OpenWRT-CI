@@ -1,0 +1,36 @@
+name: detect-version
+
+on:
+  #自动：
+  schedule:
+    - cron: 0 20 * * *
+  #手动
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+permissions: write-all
+
+jobs:
+  detect-version:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Clone Repositories
+        run: |
+          git clone --depth=1 --single-branch --branch main https://github.com/VIKINGYFY/immortalwrt.git ./wrt/
+
+      - name: Get Kernel Version
+        run: |
+          cd ./wrt/
+          PATCHVER=$(grep -r "KERNEL_PATCHVER:=" target/linux | head -n1 | cut -d= -f2)
+          FULLVER=$(grep "LINUX_VERSION-$PATCHVER" target/linux/generic/kernel-$PATCHVER \
+                    | cut -d= -f2 \
+                    | tr -d ' ')
+          echo "Kernel Version: $PATCHVER$FULLVER"
+          echo "KERNEL_VERSION=$PATCHVER$FULLVER" >> $GITHUB_ENV
+          
+      - name: Trigger OWRT-ALL
+        if: env.KERNEL_VERSION == '6.12.80' || env.KERNEL_VERSION == '6.12.88'
+        run: |
+          gh workflow run OWRT-ALL.yml
