@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
-APP_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/applications/"
+#APP_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/applications/"
 #THEMES_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/themes/"
 cd $GITHUB_WORKSPACE/wrt/
 OPENCLASH_DIR=$(find . -type d -name "luci-app-openclash" 2>/dev/null | head -n 1)
