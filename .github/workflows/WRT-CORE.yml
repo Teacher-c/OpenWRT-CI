@@ -227,8 +227,9 @@ jobs:
 
       - name: Get OpenClash Version
         run: |
-          OPENCLASH_VER=$(curl -fsSL https://raw.githubusercontent.com/immortalwrt/luci/refs/heads/master/applications/luci-app-openclash/Makefile \
-          | sed -n 's/^PKG_VERSION:=//p' | head -n1)
+          cd ./wrt
+          OPENCLASH_DIR=$(find . -type d -name "luci-app-openclash" 2>/dev/null | head -n 1)
+          OPENCLASH_VER=$(sed -n 's/^PKG_VERSION:=//p' "$OPENCLASH_DIR/Makefile" | head -n1)
           echo "OPENCLASH_VERSION=$OPENCLASH_VER" >> $GITHUB_ENV
 
       - name: Release Firmware
