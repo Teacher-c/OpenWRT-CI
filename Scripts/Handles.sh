@@ -1,93 +1,99 @@
 #!/bin/bash
+set -e
 
 PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
-#APP_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/applications/"
-#THEMES_PATCH="$GITHUB_WORKSPACE/wrt/feeds/luci/themes/"
-cd $GITHUB_WORKSPACE/wrt/
-OPENCLASH_DIR=$(find . -type d -name "luci-app-openclash" 2>/dev/null | head -n 1)
-echo "$OPENCLASH_DIR"
-#预置OpenClash内核和数据
-if [ -n "$OPENCLASH_DIR" ]; then
 
-    cd $OPENCLASH_DIR
+cd "$GITHUB_WORKSPACE/wrt/"
 
-	if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
-	    CORE_TYPE="amd64"
-	elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
-	    CORE_TYPE="arm64"
-	elif echo "$WRT_TARGET" | grep -Eiq "MT7621"; then
-	    CORE_TYPE="mipsle-softfloat"
-	else
-	    CORE_TYPE="$WRT_TARGET"  # 默认情况下返回WRT_TARGET的值
-	fi
- 
-	#CORE_MATE="https://github.com/vernesong/OpenClash/raw/core/master/meta/clash-linux-$CORE_TYPE.tar.gz"
-    #换用samrt内核
-	CORE_MATE="https://github.com/vernesong/OpenClash/raw/core/master/smart/clash-linux-$CORE_TYPE.tar.gz"
-	cd ./root/etc/openclash/
-	mkdir ./core/ && cd ./core/
-	curl -sL -o meta.tar.gz $CORE_MATE && tar -zxf meta.tar.gz && mv -f clash clash_meta && echo "meta done!"
-	chmod +x ./* && rm -rf ./*.gz
-    echo "openclash core has been updated!"
-	
-	GEO_MMDB="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb"
-	GEO_SITE="https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat"
-	GEO_IP="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat"
-	
-	FakeHTTP="https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
-	FakeSIP="https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
-	
-    cd ../
-	curl -sL -o Country.mmdb $GEO_MMDB && echo "Country.mmdb done!"
-	curl -sL -o GeoSite.dat $GEO_SITE && echo "GeoSite.dat done!"
-	curl -sL -o GeoIP.dat $GEO_IP && echo "GeoIP.dat done!"
-	echo "openclash GeoDate has been updated!"
-	
-	#添加FakeSIP和FakeHTTP
-	curl -sL -o FakeHTTP.tar.gz $FakeHTTP && tar -zxf FakeHTTP.tar.gz
-	curl -sL -o FakeSIP.tar.gz $FakeSIP && tar -zxf FakeSIP.tar.gz
-    mv ./fakehttp-linux-$CORE_TYPE/fakehttp ./ && echo "FakeHTTP done!" && rm -rf ./fakehttp-linux-$CORE_TYPE
-	mv ./fakesip-linux-$CORE_TYPE/fakesip ./ && echo "FakeSIP done!" && rm -rf ./fakesip-linux-$CORE_TYPE
-    chmod +x ./fakehttp ./fakesip && rm -rf ./*.gz
+# 优先 feeds，其次 package
+OPENCLASH_DIR=$(find ./feeds/luci/applications -type d -name "luci-app-openclash" 2>/dev/null | head -n1)
+[ -z "$OPENCLASH_DIR" ] && OPENCLASH_DIR=$(find ./package -type d -name "luci-app-openclash" 2>/dev/null | head -n1)
 
-    #预置训练模型
-	LightGBMModel="https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin"
-    curl -sL -o Model.bin $LightGBMModel && echo "LightGBMModel done!"
- 
-	#修改"ls -l /sys/class/net/ |awk '{print \$9}' 2>&1"方法导致的内存OOM
-    cd $GITHUB_WORKSPACE/wrt/
-	cd $OPENCLASH_DIR
-	cd ./root/usr/share/openclash/
-	awk '{
- 	 if ($0 ~ /ls[[:space:]]+-l[[:space:]]+\/sys\/class\/net\/.*\|[[:space:]]*awk/) {
-   	 print "for f in /sys/class/net/*;do echo ${f##*/};done";
-  	  next
- 	 }
-	  print
-	}' ./yml_change.sh > ./yml_change.sh.bak && mv ./yml_change.sh.bak ./yml_change.sh
-    echo "ls -l /sys/class/net |awk '{print \$9}' 2>&1 has been replace"
+echo "OPENCLASH_DIR=$OPENCLASH_DIR"
+
+[ -n "$OPENCLASH_DIR" ] || { echo "OpenClash not found"; exit 1; }
+
+echo "OPENCLASH_DIR=$OPENCLASH_DIR" >> "$GITHUB_ENV"
+
+cd "$OPENCLASH_DIR"
+
+# 架构判断
+if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
+    CORE_TYPE="amd64"
+elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
+    CORE_TYPE="arm64"
+elif echo "$WRT_TARGET" | grep -Eiq "MT7621"; then
+    CORE_TYPE="mipsle-softfloat"
+else
+    CORE_TYPE="$WRT_TARGET"
 fi
-	
 
-cd $PKG_PATCH
+CORE_MATE="https://github.com/vernesong/OpenClash/raw/core/master/smart/clash-linux-$CORE_TYPE.tar.gz"
 
-#修改qca-nss-drv启动顺序
+cd root/etc/openclash/
+mkdir -p core && cd core
+
+curl -fsSL -o meta.tar.gz "$CORE_MATE"
+tar -zxf meta.tar.gz
+mv -f clash clash_meta
+chmod +x ./*
+rm -f ./*.gz
+
+echo "openclash core updated"
+
+# GEO 数据
+cd ..
+
+curl -fsSL -o Country.mmdb https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb
+curl -fsSL -o GeoSite.dat https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
+curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat
+
+echo "Geo data updated"
+
+# Fake 工具
+curl -fsSL -o FakeHTTP.tar.gz "https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
+tar -zxf FakeHTTP.tar.gz
+mv fakehttp-linux-$CORE_TYPE/fakehttp ./
+rm -rf fakehttp-linux-$CORE_TYPE
+
+curl -fsSL -o FakeSIP.tar.gz "https://github.com/MikeWang000000/FakeSIP/releases/latest/download/fakesip-linux-$CORE_TYPE.tar.gz"
+tar -zxf FakeSIP.tar.gz
+mv fakesip-linux-$CORE_TYPE/fakesip ./
+rm -rf fakesip-linux-$CORE_TYPE
+
+chmod +x fakehttp fakesip
+rm -f *.gz
+
+# LightGBM
+curl -fsSL -o Model.bin https://github.com/vernesong/mihomo/releases/download/LightGBM-Model/Model.bin
+
+echo "Extra components done"
+
+# 修复OOM
+cd "$OPENCLASH_DIR/root/usr/share/openclash/"
+
+awk '{
+ if ($0 ~ /ls[[:space:]]+-l[[:space:]]+\/sys\/class\/net\/.*\|[[:space:]]*awk/) {
+   print "for f in /sys/class/net/*;do echo ${f##*/};done";
+   next
+ }
+ print
+}' yml_change.sh > yml_change.sh.tmp && mv yml_change.sh.tmp yml_change.sh
+
+echo "OOM fix applied"
+
+# 返回 package
+cd "$PKG_PATCH"
+
+# NSS 修复
 NSS_DRV="../feeds/nss_packages/qca-nss-drv/files/qca-nss-drv.init"
-if [ -f "$NSS_DRV" ]; then
-	sed -i 's/START=.*/START=85/g' $NSS_DRV
-	cd $PKG_PATCH && echo "qca-nss-drv has been fixed!"
-fi
+[ -f "$NSS_DRV" ] && sed -i 's/START=.*/START=85/g' "$NSS_DRV"
 
-#修改qca-nss-pbuf启动顺序
 NSS_PBUF="./kernel/mac80211/files/qca-nss-pbuf.init"
-if [ -f "$NSS_PBUF" ]; then
-	sed -i 's/START=.*/START=86/g' $NSS_PBUF
-	cd $PKG_PATCH && echo "qca-nss-pbuf has been fixed!"
-fi
+[ -f "$NSS_PBUF" ] && sed -i 's/START=.*/START=86/g' "$NSS_PBUF"
 
-#移除luci-app-attendedsysupgrade概览页面
-ASU_FILE=$(find ../feeds/luci/applications/luci-app-attendedsysupgrade/ -type f -name "11_upgrades.js")
-if [ -f "$ASU_FILE" ]; then
-	rm -rf $ASU_FILE
-	cd $PKG_PATCH && echo "attendedsysupgrade has been fixed!"
-fi
+# 删除 ASU 页面
+ASU_FILE=$(find ../feeds/luci/applications/luci-app-attendedsysupgrade/ -type f -name "11_upgrades.js" 2>/dev/null | head -n1)
+[ -f "$ASU_FILE" ] && rm -f "$ASU_FILE"
+
+echo "All patches done"
