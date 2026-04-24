@@ -70,6 +70,7 @@ curl -fsSL -o Model.bin https://github.com/vernesong/mihomo/releases/download/Li
 echo "Extra components done"
 
 # 修复OOM
+cd "$GITHUB_WORKSPACE/wrt/"
 cd "$OPENCLASH_DIR/root/usr/share/openclash/"
 
 awk '{
