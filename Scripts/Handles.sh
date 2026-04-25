@@ -55,7 +55,7 @@ if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
 elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
     CORE_TYPE="arm64"
 elif echo "$WRT_TARGET" | grep -Eiq "MT7621"; then
-    CORE_TYPE="mipsle-softfloat"
+    CORE_TYPE="mips32el"
 else
     CORE_TYPE="$WRT_TARGET"
 fi
