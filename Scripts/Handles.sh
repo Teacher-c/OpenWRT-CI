@@ -50,6 +50,16 @@ curl -fsSL -o GeoIP.dat https://raw.githubusercontent.com/Loyalsoldier/geoip/rel
 
 echo "Geo data updated"
 
+if echo "$WRT_TARGET" | grep -Eiq "64|86"; then
+    CORE_TYPE="x86_64"
+elif echo "$WRT_TARGET" | grep -Eiq "IPQ807X"; then
+    CORE_TYPE="arm64"
+elif echo "$WRT_TARGET" | grep -Eiq "MT7621"; then
+    CORE_TYPE="mipsle-softfloat"
+else
+    CORE_TYPE="$WRT_TARGET"
+fi
+
 # Fake 工具
 curl -fsSL -o FakeHTTP.tar.gz "https://github.com/MikeWang000000/FakeHTTP/releases/latest/download/fakehttp-linux-$CORE_TYPE.tar.gz"
 tar -zxf FakeHTTP.tar.gz
