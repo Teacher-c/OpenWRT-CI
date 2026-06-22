@@ -54,3 +54,5 @@ jobs:
       WRT_SOURCE: ${{matrix.SOURCE}}
       #使用上次编译缓存
       WRT_CACHES: ${{inputs.CACHES}}
+      #openclash源
+      CLASHSOURCE: 'vernesong/OpenClash'
