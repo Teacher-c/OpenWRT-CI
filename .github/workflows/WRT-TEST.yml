@@ -26,6 +26,11 @@ on:
         default: 'false'
         required: false
         type: boolean
+      CLASHSOURCE:
+        default: 'vernesong/OpenClash'
+        required: true
+        type: choice
+        options: [vernesong/OpenClash, Teacher-c/OpenClash]
 
 #CI权限
 permissions: write-all
@@ -57,3 +62,5 @@ jobs:
       WRT_SOURCE: ${{inputs.SOURCE}}
       #使用上次编译缓存
       WRT_CACHES: ${{inputs.CACHES}}
+      #openclash源
+      CLASHSOURCE: ${{inputs.CLASHSOURCE}}
