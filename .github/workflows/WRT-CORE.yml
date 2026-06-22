@@ -34,6 +34,9 @@ on:
       WRT_CACHES:
         required: false
         type: string
+      CLASHSOURCE:
+        required: true
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -47,6 +50,7 @@ env:
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
   WRT_SOURCE: ${{inputs.WRT_SOURCE}}
   WRT_CACHES: ${{inputs.WRT_CACHES}}
+  CLASHSOURCE: ${{inputs.CLASHSOURCE}}
 
 jobs:
   core:
